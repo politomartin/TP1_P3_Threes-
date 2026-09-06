@@ -68,11 +68,127 @@ public class ReglasDeJuego {
 	private void agregarFichaNuevaIzquierdaODerecha(int referencia) {
 		//Al momento en desarrollo		
 	}
+	//
+	//Apartado del moviento de la ficha 
+	//
+	
+	public boolean mover(int fichaFila, int fichaColumna) {
+		if(tablero.juegoTerminado()) {
+			return false;
+		}
+		boolean huboMovimiento = false;
+		
+		if (fichaFila == -1 && fichaColumna == 0) {
+            huboMovimiento = moverArriba();
+        } else if (fichaFila == 1 && fichaColumna == 0) {
+            huboMovimiento = moverAbajo();
+        } else if (fichaFila == 0 && fichaColumna == -1) {
+            huboMovimiento = moverIzquierda();
+        } else if (fichaFila == 0 && fichaColumna == 1) {
+            huboMovimiento = moverDerecha();
+        }
+
+        if (huboMovimiento) {
+            insertarEnBordeOpuesto(fichaFila, fichaColumna);
+            obtenerSiguienteFicha();
+            calcularPuntajeTotal();
+            juegoTerminado();
+        }
+
+        return huboMovimiento;
+	}
+
+	private boolean moverArriba() {
+		boolean movido = false;
+        int filas = tablero.obtenerFilas();
+        int cols = tablero.obtenerColumnas();
+
+        for (int c = 0; c < cols; c++) {
+            for (int f = 0; f < filas - 1; f++) {
+                if (intentarDesplazarOFusionar(f, c, f + 1, c)) {
+                    movido = true;
+                }
+            }
+        }
+        return movido;
+	}
+	
+	
+	public boolean moverAbajo() {
+        boolean movido = false;
+        int filas = tablero.obtenerFilas();
+        int cols = tablero.obtenerColumnas();
+
+        for (int c = 0; c < cols; c++) {
+            for (int f = filas - 1; f > 0; f--) {
+                if (intentarDesplazarOFusionar(f, c, f - 1, c)) {
+                    movido = true;
+                }
+            }
+        }
+        return movido;
+    }
+	
+	public boolean moverIzquierda() {
+        boolean movido = false;
+        int filas = tablero.obtenerFilas();
+        int cols = tablero.obtenerColumnas();
+
+        for (int f = 0; f < filas; f++) {
+            for (int c = 0; c < cols - 1; c++) {
+                if (intentarDesplazarOFusionar(f, c, f, c + 1)) {
+                    movido = true;
+                }
+            }
+        }
+        return movido;
+    }
+
+    public boolean moverDerecha() {
+        boolean movido = false;
+        int filas = tablero.obtenerFilas();
+        int cols = tablero.obtenerColumnas();
+
+        for (int f = 0; f < filas; f++) {
+            for (int c = cols - 1; c > 0; c--) {
+                if (intentarDesplazarOFusionar(f, c, f, c - 1)) {
+                    movido = true;
+                }
+            }
+        }
+        return movido;
+    }
+
+
+	private boolean intentarDesplazarOFusionar(int filaDestino, int columnaDestino, int filaOrigen, int columnaOrigen) {
+		int valorOrigen = tablero.obtenerFicha(filaOrigen, columnaOrigen);
+		int valorDestino = tablero.obtenerFicha(filaDestino, columnaDestino);
+		
+		if(valorOrigen == 0) {
+            return false;
+        }
+		
+		if(valorDestino == 0) {
+			tablero.setValor(filaDestino, columnaDestino, valorOrigen);
+			tablero.setValor(filaOrigen, columnaOrigen, 0);
+            return true;
+		}
+		if(puedenFusionarse(valorOrigen, valorDestino)) {
+			tablero.setValor(filaDestino, columnaDestino, valorOrigen + valorDestino);
+            tablero.setValor(filaOrigen, columnaOrigen, 0);
+            return true;
+        }
+
+        return false;
+	}
+	private void insertarEnBordeOpuesto(int deltaFila, int deltaCol) {
+	   
+	}
+	
 	
 	//
 	//Apartado combinar Fichas
 	//
-	
 	public boolean puedenFusionarse(int ficha1, int ficha2) {
 		if(ficha1 == 0 || ficha2 == 0) {
 			return false;
