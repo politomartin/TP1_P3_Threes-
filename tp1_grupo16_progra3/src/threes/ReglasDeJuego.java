@@ -63,28 +63,30 @@ public class ReglasDeJuego {
 	
 	private void agregarFichaNuevaArribaYAbajo(int fila) {
 		if(puedoAgregarFichaArribaOAbajo(fila)) {
-			int col = random.nextInt(3);
+			int col = random.nextInt(tablero.obtenerTamanio());
 			boolean iterador = true;
 			while(iterador) {
 				if(posicionLibre(fila, col)) {
 					tablero.setValor(fila, col, siguienteFicha);
 					iterador = false;
+				} else {
+					col = random.nextInt(tablero.obtenerTamanio());					
 				}
-				col = random.nextInt(3);
 			}
 		}
 	}
 	
 	private void agregarFichaNuevaIzquierdaODerecha(int col) {
 		if(puedoAgregarFichaIzquierdaODerecha(col)) {
-			int fila = random.nextInt(3);
+			int fila = random.nextInt(tablero.obtenerTamanio());
 			boolean iterador = true;
 			while(iterador) {
 				if(posicionLibre(fila, col)) {
 					tablero.setValor(fila, col, siguienteFicha);
 					iterador = false;
+				} else {
+					fila = random.nextInt(tablero.obtenerTamanio());					
 				}
-				col = random.nextInt(3);
 			}
 		}
 	}
