@@ -1,5 +1,5 @@
 package threes;
-import java.util.Random; 
+import java.util.Random;
 
 public class ReglasDeJuego {
 	
@@ -204,7 +204,32 @@ public class ReglasDeJuego {
         return false;
 	}
 	private void insertarEnBordeOpuesto(int deltaFila, int deltaCol) {
-	   
+		
+		
+		
+		if (deltaFila == -1 && deltaCol == 0) {   // se mueve para arriba dado que entra ficha nueva por ABAJO
+	        int filaBorde = tablero.obtenerTamanio() - 1;
+	        if (puedoAgregarFichaArribaOAbajo(filaBorde)) {
+	            agregarFichaNuevaArribaYAbajo(filaBorde);
+	        }
+	    } else if (deltaFila == 1 && deltaCol == 0) {  // se mueve para abajo dado que entra ficha nueva por ARRIBA
+	        int filaBorde = 0;
+	        if (puedoAgregarFichaArribaOAbajo(filaBorde)) {
+	            agregarFichaNuevaArribaYAbajo(filaBorde);
+	        }
+	    } else if (deltaFila == 0 && deltaCol == -1) { // se mueve para izquierda entra ficha nueva por la DERECHA
+	        int colBorde = tablero.obtenerTamanio() - 1;
+	        if (puedoAgregarFichaIzquierdaODerecha(colBorde)) {
+	            agregarFichaNuevaIzquierdaODerecha(colBorde);
+	        }
+	    } else if (deltaFila == 0 && deltaCol == 1) { // se mueve para derecha entra ficha nueva por la IZQUIERDA
+	        int colBorde = 0;
+	        if (puedoAgregarFichaIzquierdaODerecha(colBorde)) {
+	            agregarFichaNuevaIzquierdaODerecha(colBorde);
+	        }
+	    }
+
+		
 	}
 	
 
