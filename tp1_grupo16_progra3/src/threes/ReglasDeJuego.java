@@ -13,7 +13,7 @@ public class ReglasDeJuego {
 		tablero = new Tablero(4);
 		random = new Random();
 		puntajeFinal = 0;
-		siguienteFicha = obtenerSiguienteFicha();
+		siguienteFicha = calcularSiguienteFicha();
 		finDelJuego = false;
 	}
 	
@@ -31,7 +31,7 @@ public class ReglasDeJuego {
 	
 	public boolean puedoAgregarFichaArribaOAbajo(int fila) {
 		
-		if(fila != 0 || fila != tablero.obtenerTamanio()-1) {
+		if(fila != 0 && fila != tablero.obtenerTamanio()-1) {
 			throw new IllegalArgumentException("La fila debe ser la superior o inferior");
 		}
 		
@@ -47,7 +47,7 @@ public class ReglasDeJuego {
 	
 	public boolean puedoAgregarFichaIzquierdaODerecha(int col) {
 		
-		if(col != 0 || col != tablero.obtenerTamanio()-1) {
+		if(col != 0 && col != tablero.obtenerTamanio()-1) {
 			throw new IllegalArgumentException("La columna debe ser la que se encuentra mas a la izquierda o mas a la derecha");
 		}
 		
@@ -73,7 +73,7 @@ public class ReglasDeJuego {
 	//
 	
 	public boolean mover(int fichaFila, int fichaColumna) {
-		if(tablero.juegoTerminado()) {
+		if(juegoTerminado()) {
 			return false;
 		}
 		boolean huboMovimiento = false;
@@ -90,9 +90,9 @@ public class ReglasDeJuego {
 
         if (huboMovimiento) {
             insertarEnBordeOpuesto(fichaFila, fichaColumna);
-            obtenerSiguienteFicha();
-            calcularPuntajeTotal();
-            juegoTerminado();
+            this.siguienteFicha = calcularSiguienteFicha();
+            calcularPuntajeTotal();  //Modifique esta funcion, la anterior llamaba al getter de puntaje total
+            juegoTerminado();  //Nota de Martin, que se busca hacer con esto?
         }
 
         return huboMovimiento;
@@ -174,7 +174,7 @@ public class ReglasDeJuego {
             return true;
 		}
 		if(puedenFusionarse(valorOrigen, valorDestino)) {
-			tablero.setValor(filaDestino, columnaDestino, valorOrigen + valorDestino);
+			tablero.setValor(filaDestino, columnaDestino, combinarFichas(valorOrigen, valorDestino));
             tablero.setValor(filaOrigen, columnaOrigen, 0);
             return true;
         }
@@ -185,6 +185,7 @@ public class ReglasDeJuego {
 	   
 	}
 	
+
 	
 	//
 	//Apartado combinar Fichas
@@ -209,8 +210,7 @@ public class ReglasDeJuego {
 			return ficha1 + ficha2;
 		}
 		
-		if((ficha1 >= 3 && ficha2 == ficha1) ||
-			(ficha1 == ficha2 && ficha2 >= 3)) {
+		if(sonFichasMayorQue3Iguales(ficha1, ficha2)) {
 			return ficha1*2;
 		}
 		
@@ -261,6 +261,10 @@ public class ReglasDeJuego {
 	private int calcularSiguienteFicha() {
 		return random.nextInt(3)+1;
 	}
+	
+	public void setJuegoTerminado(boolean juegoTerminado) {
+		finDelJuego = juegoTerminado;
+	}	
 	
 	//Getters
 	
