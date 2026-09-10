@@ -24,11 +24,37 @@ public class Tablero {
 	}
 	
 	public int obtenerFicha(int fila, int col) {
+		if(filaInvalida(fila)) {
+			throw new RuntimeException("fila fuera de rango");
+		}
+		
+		if(columnaInvalida(col)) {
+			throw new RuntimeException("col fuera de rango");
+		}
+		
 		return tablero[fila][col];
 	}
 	
+
+
 	public void setValor(int fila, int col, int valor) {
-        tablero[fila][col] = valor;
+		if(filaInvalida(fila)) {
+			throw new RuntimeException("fila fuera de rango");
+		}
+		
+		if(columnaInvalida(col)) {
+			throw new RuntimeException("col fuera de rango");
+		}
+		
+		tablero[fila][col] = valor;
     }
 
+	private boolean columnaInvalida(int columna) {
+		return columna < 0 || columna >= this.tamanioTablero;
+	}
+	
+	
+	private boolean filaInvalida(int fila) {
+		return fila < 0 || fila >= this.tamanioTablero;
+	}
 }
