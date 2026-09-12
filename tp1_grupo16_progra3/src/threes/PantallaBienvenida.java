@@ -1,81 +1,94 @@
 package threes;
 
-import java.awt.EventQueue;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class PantallaBienvenida {
 
-	private JFrame frame;
-	private JTextField nombreUsuario;
-	private String nombre;
+    private JFrame frame;
+    private JTextField IngresoNombreUsuario;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PantallaBienvenida window = new PantallaBienvenida();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private String nombre;
 
-	/**
-	 * Create the application.
-	 */
-	public PantallaBienvenida() {
-		initialize();
-	}
+    private JuegoTres programa;
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+    public PantallaBienvenida(JuegoTres programa) {
+
+        this.programa = programa;
+
+        initialize();
+
+    }
+
+
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(650, 350, 1330, 760);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		SpringLayout springLayout = new SpringLayout();
-		frame.getContentPane().setLayout(springLayout);
-		
+		frame.getContentPane().setLayout(null);
+
 		JLabel Bienvenido = new JLabel("Bienvenido! Ingrese su nombre para iniciar");
-		springLayout.putConstraint(SpringLayout.NORTH, Bienvenido, 24, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, Bienvenido, 10, SpringLayout.WEST, frame.getContentPane());
+		Bienvenido.setBounds(424, 160, 406, 26);
+		Bienvenido.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		frame.getContentPane().add(Bienvenido);
+
+
+		IngresoNombreUsuario = new JTextField();
+		IngresoNombreUsuario.setBounds(316, 270, 625, 84);
+		frame.getContentPane().add(IngresoNombreUsuario);
+		IngresoNombreUsuario.setColumns(10);
 		
-		nombreUsuario = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, nombreUsuario, 31, SpringLayout.SOUTH, Bienvenido);
-		springLayout.putConstraint(SpringLayout.WEST, nombreUsuario, 103, SpringLayout.WEST, frame.getContentPane());
-		frame.getContentPane().add(nombreUsuario);
-		nombreUsuario.setColumns(10);
+		JLabel ErrorNombreVacio = new JLabel();
+		ErrorNombreVacio.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 26));
+		ErrorNombreVacio.setHorizontalAlignment(SwingConstants.CENTER);
+		ErrorNombreVacio.setBounds(316, 580, 559, 45);
+		frame.getContentPane().add(ErrorNombreVacio);
+
+		JButton BotonContinuar = new JButton("continuar");
+		BotonContinuar.setBounds(462, 451, 318, 64);
+		BotonContinuar.addActionListener(new ActionListener() {
+
+		    public void actionPerformed(ActionEvent e) {
+
+		        String nombreIngresado =
+		                IngresoNombreUsuario.getText();
+
+		        if (!nombreIngresado.trim().isEmpty()) {
+
+		            nombre = nombreIngresado;
+
+		            programa.iniciarJuego(nombre);
+
+		        } else {
+
+		            ErrorNombreVacio.setText(
+		                "El nombre no puede ser Vacio"
+		            );
+
+		        }
+		    }
+		});
 		
-		JButton botonContinuar = new JButton("continuar");
-		springLayout.putConstraint(SpringLayout.NORTH, botonContinuar, 34, SpringLayout.SOUTH, nombreUsuario);
-		springLayout.putConstraint(SpringLayout.WEST, botonContinuar, 139, SpringLayout.WEST, frame.getContentPane());
-		frame.getContentPane().add(botonContinuar);
+		BotonContinuar.setFont(new Font("Consolas", Font.BOLD, 34));
+		frame.getContentPane().add(BotonContinuar);
+		
+
 	}
 
 	public void mostrarVentana(boolean b) {
-	    frame.setVisible(b);
+		frame.setVisible(b);
 	}
 
 	public void cerrar() {
 		frame.dispose();
 	}
 
-	public boolean IniciarJuego() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public String nombrePasado() {
 		return nombre;
