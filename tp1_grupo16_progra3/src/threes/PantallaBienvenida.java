@@ -2,16 +2,17 @@ package threes;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
-public class Interfaz {
+public class PantallaBienvenida {
 
 	private JFrame frame;
 	private JTextField nombreUsuario;
+	private String nombre;
 
 	/**
 	 * Launch the application.
@@ -20,7 +21,7 @@ public class Interfaz {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Interfaz window = new Interfaz();
+					PantallaBienvenida window = new PantallaBienvenida();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +33,7 @@ public class Interfaz {
 	/**
 	 * Create the application.
 	 */
-	public Interfaz() {
+	public PantallaBienvenida() {
 		initialize();
 	}
 
@@ -61,5 +62,22 @@ public class Interfaz {
 		springLayout.putConstraint(SpringLayout.NORTH, botonContinuar, 34, SpringLayout.SOUTH, nombreUsuario);
 		springLayout.putConstraint(SpringLayout.WEST, botonContinuar, 139, SpringLayout.WEST, frame.getContentPane());
 		frame.getContentPane().add(botonContinuar);
+	}
+
+	public void mostrarVentana(boolean b) {
+	    frame.setVisible(b);
+	}
+
+	public void cerrar() {
+		frame.dispose();
+	}
+
+	public boolean IniciarJuego() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public String nombrePasado() {
+		return nombre;
 	}
 }
