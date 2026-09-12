@@ -114,7 +114,7 @@ public class ReglasDeJuego {
             insertarEnBordeOpuesto(fichaFila, fichaColumna);
             this.siguienteFicha = calcularSiguienteFicha();
             calcularPuntajeTotal();  //Modifique esta funcion, la anterior llamaba al getter de puntaje total
-            juegoTerminado();  //Nota de Martin, que se busca hacer con esto?
+            setJuegoTerminado(calcularFinDelJuego());
         }
 
         return huboMovimiento;
@@ -204,9 +204,6 @@ public class ReglasDeJuego {
         return false;
 	}
 	private void insertarEnBordeOpuesto(int deltaFila, int deltaCol) {
-		
-		
-		
 		if (deltaFila == -1 && deltaCol == 0) {   // se mueve para arriba dado que entra ficha nueva por ABAJO
 	        int filaBorde = tablero.obtenerTamanio() - 1;
 	        if (puedoAgregarFichaArribaOAbajo(filaBorde)) {
@@ -228,10 +225,39 @@ public class ReglasDeJuego {
 	            agregarFichaNuevaIzquierdaODerecha(colBorde);
 	        }
 	    }
-
-		
 	}
 	
+	private boolean calcularFinDelJuego() {
+	    return tableroLleno() && !existeFusionPosible();
+	}
+
+	private boolean tableroLleno() {
+		for(int fil = 0; fil<tablero.obtenerTamanio();fil++) {
+			for(int col = 0; col<tablero.obtenerTamanio(); col++) {
+				if(posicionLibre(fil, col))
+					return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean existeFusionPosible() {
+		int tamanioTablero = tablero.obtenerTamanio();
+		
+		for(int fil = 0; fil<tamanioTablero;fil++) {
+			for(int col = 0; col<tamanioTablero; col++) {
+				// compara con la ficha derecha y abajo para cubrir todas las fusiones posibles sin llegar a la ultima columna o fila
+				
+				boolean fusionAbajo =  fil < tamanioTablero-1 ? puedenFusionarse(tablero.obtenerFicha(fil, col), tablero.obtenerFicha(fil + 1, col)) : false;
+				boolean fusionDerecha = col < tamanioTablero-1 ? puedenFusionarse(tablero.obtenerFicha(fil, col), tablero.obtenerFicha(fil, col + 1)): false ;
+				
+				if ( fusionAbajo || fusionDerecha)
+						return true;
+			}
+		}
+		return false;
+	}
 
 	
 	//
