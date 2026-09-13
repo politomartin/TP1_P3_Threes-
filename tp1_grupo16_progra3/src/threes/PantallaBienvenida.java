@@ -29,6 +29,7 @@ public class PantallaBienvenida {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Bienvenido a Tres");
 		frame.setBounds(650, 350, 1330, 760);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);

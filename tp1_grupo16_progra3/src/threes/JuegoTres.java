@@ -28,9 +28,9 @@ public class JuegoTres {
     public void iniciarJuego(String nombreUsuario) {
 
         this.nombreUsuario = nombreUsuario;
-        System.out.println(nombreUsuario);
 
         pantallaBienvenida.mostrarVentana(false);
+        pantallaBienvenida.cerrar();
 
         juego = new MostrarJuego(nombreUsuario);
 
