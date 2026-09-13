@@ -24,8 +24,12 @@ public class MostrarJuego {
 	private JPanel panelTablero;
 
 	private JLabel[][] casillas;
+	
+	private JLabel Ipuntuacion;
 
 	private ReglasDeJuego reglas;
+	
+	private JLabel ISiguienteFicha;
 
 	private int puntuacion;
 
@@ -81,11 +85,18 @@ public class MostrarJuego {
 			;
 		}
 		frame.getContentPane().add(panelTablero, BorderLayout.CENTER);
+		
+		Ipuntuacion = new JLabel("Puntuacion :" + this.puntuacion);
+		Ipuntuacion.setBounds(947, 23, 196, 43);
+		frame.getContentPane().add(Ipuntuacion);
+		
+		ISiguienteFicha = new JLabel("Proxima:" + reglas.obtenerSiguienteFicha());
+		ISiguienteFicha.setBounds(549, 23, 163, 32);
+		frame.getContentPane().add(ISiguienteFicha);
 	}
 
 	private void actualizarTablero() {
 		Tablero tablero = reglas.obtenerMapa();
-		
 		for (int fila= 0; fila < 4; fila ++) {
 			for(int col= 0; col <4; col++) {
 				int valor = tablero.obtenerFicha(fila,col);
@@ -93,10 +104,14 @@ public class MostrarJuego {
 					casillas[fila][col].setText("");
 				}else {
 					casillas[fila][col].setText(String.valueOf(valor));
+					
 				}
 				
 			}
 		}
+		ISiguienteFicha.setText("Proxima: " + reglas.obtenerSiguienteFicha());
+		this.puntuacion = reglas.obtenerPuntaje();
+		Ipuntuacion.setText("Puntuacion :" + this.puntuacion);
 	}
 
     private void configurarTeclado() {
@@ -174,6 +189,7 @@ public class MostrarJuego {
         boolean seMovio = reglas.mover(fila, columna);
 
         if (seMovio) {
+        	
 
             actualizarTablero();
 

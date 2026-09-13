@@ -11,11 +11,17 @@ public class JuegoTres {
 
     public static void main(String[] args) {
 
+    	nuevoJuego();
+
+    }
+    
+    public static void nuevoJuego() {
         JuegoTres programa = new JuegoTres();
 
         programa.iniciar();
-
+    	
     }
+    
 
     public void iniciar() {
 
@@ -45,9 +51,10 @@ public class JuegoTres {
     	juego.mostrarVentana(false);
     	juego.cerrar();
     	
-    	pantallaPuntuacion = new PantallaPuntuacion();
+    	pantallaPuntuacion = new PantallaPuntuacion(this, this.nombreUsuario, this.puntuacion);
     	
     	pantallaPuntuacion.mostrarVentana(true);
     }
+
 
 }
