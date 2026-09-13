@@ -16,6 +16,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 public class MostrarJuego {
+	
+	private JuegoTres programa;
 
 	private JFrame frame;
 
@@ -25,11 +27,11 @@ public class MostrarJuego {
 
 	private ReglasDeJuego reglas;
 
-	private String nombreUsuario;
+	private int puntuacion;
 
-	public MostrarJuego(String nombreUsuario) {
+	public MostrarJuego(JuegoTres juegoTres) {
 
-		this.nombreUsuario = nombreUsuario;
+		this.programa = juegoTres;
 
 		reglas = new ReglasDeJuego();
 
@@ -179,7 +181,7 @@ public class MostrarJuego {
 
         if (reglas.juegoTerminado()) {
 
-            // Acá pasa a la pantalla de puntuaciones.
+        	programa.terminarJuego(reglas.obtenerPuntaje());
 
         }
 

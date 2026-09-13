@@ -32,10 +32,22 @@ public class JuegoTres {
         pantallaBienvenida.mostrarVentana(false);
         pantallaBienvenida.cerrar();
 
-        juego = new MostrarJuego(nombreUsuario);
+        juego = new MostrarJuego(this);
 
         juego.mostrarVentana(true);
 
+    }
+    
+    public void terminarJuego(Integer puntuacion) {
+    	
+    	this.puntuacion = String.valueOf(puntuacion);
+    	
+    	juego.mostrarVentana(false);
+    	juego.cerrar();
+    	
+    	pantallaPuntuacion = new PantallaPuntuacion();
+    	
+    	pantallaPuntuacion.mostrarVentana(true);
     }
 
 }
