@@ -15,8 +15,16 @@ public class ReglasDeJuego {
 		puntajeFinal = 0;
 		siguienteFicha = calcularSiguienteFicha();
 		finDelJuego = false;
+		colocarFichaInicial();
 	}
 	
+	
+	private void colocarFichaInicial() {
+		int fila = random.nextInt(tablero.obtenerTamanio());
+	    int col = random.nextInt(tablero.obtenerTamanio());
+	    tablero.setValor(fila, col, siguienteFicha);
+	
+	}
 	
 	//
 	//Apartado de agregado de fichas post movimiento

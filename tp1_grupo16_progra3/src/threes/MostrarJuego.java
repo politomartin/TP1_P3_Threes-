@@ -53,9 +53,6 @@ public class MostrarJuego {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		crearTablero();
-		reglas.obtenerMapa().setValor(0, 0, 1);
-		reglas.obtenerMapa().setValor(1, 2, 2);
-		reglas.obtenerMapa().setValor(3, 3, 3);
 		configurarTeclado();
 		actualizarTablero();
 
