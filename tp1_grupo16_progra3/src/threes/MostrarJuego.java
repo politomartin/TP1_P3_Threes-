@@ -65,7 +65,7 @@ public class MostrarJuego {
 
 	private void crearTablero() {
 		panelTablero = new JPanel();
-		panelTablero.setBackground(new Color(128, 255, 255));
+		panelTablero.setBackground(new Color(230, 230, 230));
 		panelTablero.setSize(600, 600);
 		panelTablero.setLocation(298, 66);
 		panelTablero.setLayout(new GridLayout(4, 4, 5, 5));
@@ -78,7 +78,7 @@ public class MostrarJuego {
 				casilla.setFont(new Font("Arial", Font.BOLD, 24));
 				casilla.setOpaque(true);
 				casilla.setBackground(Color.LIGHT_GRAY);
-				casilla.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				casilla.setBorder(BorderFactory.createLineBorder(new Color(180, 180, 180), 2));
 				casillas[fila][col] = casilla;
 				panelTablero.add(casilla);
 			}
@@ -87,11 +87,14 @@ public class MostrarJuego {
 		frame.getContentPane().add(panelTablero, BorderLayout.CENTER);
 		
 		Ipuntuacion = new JLabel("Puntuacion :" + this.puntuacion);
-		Ipuntuacion.setBounds(947, 23, 196, 43);
+		Ipuntuacion.setBounds(1085, 20, 196, 43);
+		Ipuntuacion.setFont(new Font("Arial", Font.BOLD, 24));
 		frame.getContentPane().add(Ipuntuacion);
 		
 		ISiguienteFicha = new JLabel("Proxima:" + reglas.obtenerSiguienteFicha());
-		ISiguienteFicha.setBounds(549, 23, 163, 32);
+		ISiguienteFicha.setFont(new Font("Arial", Font.BOLD, 24));
+		ISiguienteFicha.setHorizontalAlignment(SwingConstants.CENTER);
+		ISiguienteFicha.setBounds(519, 23, 163, 32);
 		frame.getContentPane().add(ISiguienteFicha);
 	}
 
@@ -102,14 +105,24 @@ public class MostrarJuego {
 				int valor = tablero.obtenerFicha(fila,col);
 				if(valor == 0) {
 					casillas[fila][col].setText("");
+					casillas[fila][col].setBackground(new Color(200, 200, 200));
 				}else {
 					casillas[fila][col].setText(String.valueOf(valor));
 					
 				}
 				
+				casillas[fila][col].setBackground(obtenerColorCasilla(valor));
+	            casillas[fila][col].setForeground(obtenerColorTexto(valor));
+				
 			}
 		}
-		ISiguienteFicha.setText("Proxima: " + reglas.obtenerSiguienteFicha());
+		
+		int proximaFicha = reglas.obtenerSiguienteFicha();
+		ISiguienteFicha.setText("Proxima: " + proximaFicha);
+		ISiguienteFicha.setOpaque(true);
+		ISiguienteFicha.setBackground(obtenerColorCasilla(proximaFicha));
+		ISiguienteFicha.setForeground(obtenerColorTexto(proximaFicha));
+		ISiguienteFicha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(180, 180, 180), 2));
 		this.puntuacion = reglas.obtenerPuntaje();
 		Ipuntuacion.setText("Puntuacion :" + this.puntuacion);
 	}
@@ -213,4 +226,29 @@ public class MostrarJuego {
 	public void cerrar() {
 		frame.dispose();
 	}
+	
+	private Color obtenerColorCasilla(int valor) {
+        switch (valor) {
+            case 0: return new Color(200, 200, 200);
+            case 1: return new Color(100, 200, 255);
+            case 2: return new Color(255, 100, 120);
+            case 3: return Color.WHITE;
+            case 6: return new Color(255, 235, 150);
+            case 12: return new Color(255, 200, 150);
+            case 24: return new Color(255, 150, 150);
+            case 48: return new Color(150, 255, 150);
+            case 96: return new Color(150, 255, 255);
+            case 192: return new Color(150, 150, 255);
+            case 384: return new Color(220, 150, 255);
+            case 768: return new Color(255, 150, 220);
+            default: return new Color(220, 220, 220);
+        }
+    }
+
+    private Color obtenerColorTexto(int valor) {
+        if (valor == 1 || valor == 2) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
 }

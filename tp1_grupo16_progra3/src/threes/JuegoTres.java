@@ -1,5 +1,8 @@
 package threes;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
 public class JuegoTres {
 
     private PantallaBienvenida pantallaBienvenida;
@@ -10,7 +13,11 @@ public class JuegoTres {
     private String puntuacion;
 
     public static void main(String[] args) {
-
+    	
+    	 try {
+    		 javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+    	 }catch (Exception e) {}
+    	
     	nuevoJuego();
 
     }
@@ -44,9 +51,21 @@ public class JuegoTres {
 
     }
     
+    private void guardarPuntaje(String nombre, int puntaje) {
+        try {
+        	FileOutputStream fos = new FileOutputStream("Puntuacion.txt", true);
+        	OutputStreamWriter out = new OutputStreamWriter(fos);
+        	
+        	out.write(nombre + "," + puntaje + "\r\n");
+        	out.close();
+        	
+        } catch (Exception e) {}
+    }
+    
     public void terminarJuego(Integer puntuacion) {
     	
     	this.puntuacion = String.valueOf(puntuacion);
+    	guardarPuntaje(this.nombreUsuario, puntuacion);
     	
     	juego.mostrarVentana(false);
     	juego.cerrar();

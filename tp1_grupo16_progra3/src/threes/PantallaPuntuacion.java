@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class PantallaPuntuacion {
 
@@ -29,18 +30,20 @@ public class PantallaPuntuacion {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Fin del juego :'(");
-		frame.setBounds(650, 380, 1300, 760 );
+		frame.setBounds(650, 380, 1330, 760 );
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel Inombre = new JLabel("Nombre: " + this.nombre);
+		Inombre.setHorizontalAlignment(SwingConstants.CENTER);
 		Inombre.setFont(new Font("Consolas", Font.PLAIN, 20));
-		Inombre.setBounds(469, 142, 259, 60);
+		Inombre.setBounds(452, 144, 396, 60);
 		frame.getContentPane().add(Inombre);
 		
 		JLabel IPuntuacion = new JLabel("Puntaje:" + this.puntuacion);
+		IPuntuacion.setHorizontalAlignment(SwingConstants.CENTER);
 		IPuntuacion.setFont(new Font("Consolas", Font.PLAIN, 20));
-		IPuntuacion.setBounds(469, 205, 228, 60);
+		IPuntuacion.setBounds(452, 217, 396, 60);
 		frame.getContentPane().add(IPuntuacion);
 		
 		JButton IVolverAJugar = new JButton("Volver a Jugar");
@@ -51,7 +54,8 @@ public class PantallaPuntuacion {
 			}
 		});
 		IVolverAJugar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		IVolverAJugar.setBounds(200, 418, 253, 141);
+		IVolverAJugar.setBounds(200, 418, 267, 80);
+		IVolverAJugar.setFocusPainted(false);
 		frame.getContentPane().add(IVolverAJugar);
 		
 		JButton IFinDelJuego = new JButton("Cerrar");
@@ -62,7 +66,7 @@ public class PantallaPuntuacion {
 
 		});
 		IFinDelJuego.setFont(new Font("Tahoma", Font.BOLD, 20));
-		IFinDelJuego.setBounds(760, 418, 267, 141);
+		IFinDelJuego.setBounds(847, 418, 267, 80);
 		frame.getContentPane().add(IFinDelJuego);
 		
 		
