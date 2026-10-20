@@ -1,4 +1,5 @@
-package threes;
+package interfaz;
+
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -8,6 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
+
+import threes.JuegoTres;
+import threes.ReglasDeJuego;
+import threes.Tablero;
+
 import javax.swing.BorderFactory;
 import javax.swing.KeyStroke;
 
@@ -15,7 +21,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
-public class MostrarJuego {
+public class VentanaJuego {
 	
 	private JuegoTres programa;
 
@@ -33,7 +39,7 @@ public class MostrarJuego {
 
 	private int puntuacion;
 
-	public MostrarJuego(JuegoTres juegoTres) {
+	public VentanaJuego(JuegoTres juegoTres) {
 
 		this.programa = juegoTres;
 

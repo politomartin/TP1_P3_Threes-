@@ -2,13 +2,19 @@ package threes;
 
 public class Tablero {
 
-	private int[][] tablero;
+	private Ficha[][] tablero;
 	private int tamanioTablero;
+	private int cantidadFilas;
+    private int cantidadColumnas;
+	
 	
 	public Tablero(int tamanioSeleccionado) {
-		this.tablero = new int[tamanioSeleccionado][tamanioSeleccionado];
 		this.tamanioTablero = tamanioSeleccionado;
+		this.tablero = new Ficha[tamanioSeleccionado][tamanioSeleccionado];
+	
+		
 	}
+	
 	
 	
 	public int obtenerFilas() {
@@ -23,7 +29,7 @@ public class Tablero {
 		return tamanioTablero;
 	}
 	
-	public int obtenerFicha(int fila, int col) {
+	public Ficha obtenerFicha(int fila, int col) {
 		if(filaInvalida(fila)) {
 			throw new RuntimeException("fila fuera de rango");
 		}
@@ -46,7 +52,7 @@ public class Tablero {
 			throw new RuntimeException("col fuera de rango");
 		}
 		
-		tablero[fila][col] = valor;
+		tablero[fila][col] = new Ficha(0);
     }
 
 	private boolean columnaInvalida(int columna) {

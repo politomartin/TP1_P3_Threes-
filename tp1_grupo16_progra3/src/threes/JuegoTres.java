@@ -3,10 +3,14 @@ package threes;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
+import interfaz.VentanaJuego;
+import interfaz.PantallaBienvenida;
+import interfaz.PantallaPuntuacion;
+
 public class JuegoTres {
 
     private PantallaBienvenida pantallaBienvenida;
-    private MostrarJuego juego;
+    private VentanaJuego juego;
     private PantallaPuntuacion pantallaPuntuacion;
 
     private String nombreUsuario;
@@ -45,7 +49,7 @@ public class JuegoTres {
         pantallaBienvenida.mostrarVentana(false);
         pantallaBienvenida.cerrar();
 
-        juego = new MostrarJuego(this);
+        juego = new VentanaJuego(this);
 
         juego.mostrarVentana(true);
 

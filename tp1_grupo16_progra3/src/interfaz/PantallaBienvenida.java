@@ -1,4 +1,4 @@
-package threes;
+package interfaz;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import threes.JuegoTres;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
