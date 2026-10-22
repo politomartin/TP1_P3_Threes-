@@ -1,7 +1,5 @@
 package interfaz;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -10,17 +8,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-import threes.JuegoTres;
+
+import controlador.ControladorJuego;
 
 public class PantallaPuntuacion {
 
+	private ControladorJuego controlador;
 	private JFrame frame;
-	private JuegoTres programa;
 	private String nombre;
 	private String puntuacion;
 	
-	public PantallaPuntuacion(JuegoTres juegoTres, String nombreUsuario, String puntuacion) {
-		this.programa = juegoTres;
+	public PantallaPuntuacion(ControladorJuego controlador, String nombreUsuario, String puntuacion) {
+		this.controlador = controlador;
 		this.nombre = nombreUsuario;
 		this.puntuacion = puntuacion;
 		initialize();
@@ -36,43 +35,41 @@ public class PantallaPuntuacion {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel Inombre = new JLabel("Nombre: " + this.nombre);
-		Inombre.setHorizontalAlignment(SwingConstants.CENTER);
-		Inombre.setFont(new Font("Consolas", Font.PLAIN, 20));
-		Inombre.setBounds(452, 144, 396, 60);
-		frame.getContentPane().add(Inombre);
+		JLabel nombre = new JLabel("Nombre: " + this.nombre);
+		nombre.setHorizontalAlignment(SwingConstants.CENTER);
+		nombre.setFont(new Font("Consolas", Font.PLAIN, 20));
+		nombre.setBounds(452, 144, 396, 60);
+		frame.getContentPane().add(nombre);
 		
-		JLabel IPuntuacion = new JLabel("Puntaje:" + this.puntuacion);
-		IPuntuacion.setHorizontalAlignment(SwingConstants.CENTER);
-		IPuntuacion.setFont(new Font("Consolas", Font.PLAIN, 20));
-		IPuntuacion.setBounds(452, 217, 396, 60);
-		frame.getContentPane().add(IPuntuacion);
+		JLabel puntuacion = new JLabel("Puntaje:" + this.puntuacion);
+		puntuacion.setHorizontalAlignment(SwingConstants.CENTER);
+		puntuacion.setFont(new Font("Consolas", Font.PLAIN, 20));
+		puntuacion.setBounds(452, 217, 396, 60);
+		frame.getContentPane().add(puntuacion);
 		
-		JButton IVolverAJugar = new JButton("Volver a Jugar");
-		IVolverAJugar.addActionListener(new ActionListener() {
+		JButton volverAJugar = new JButton("Volver a Jugar");
+		volverAJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JuegoTres.nuevoJuego();
+				controlador.iniciar();
 				cerrar();
 			}
 		});
-		IVolverAJugar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		IVolverAJugar.setBounds(200, 418, 267, 80);
-		IVolverAJugar.setFocusPainted(false);
-		frame.getContentPane().add(IVolverAJugar);
+		volverAJugar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		volverAJugar.setBounds(200, 418, 267, 80);
+		volverAJugar.setFocusPainted(false);
+		frame.getContentPane().add(volverAJugar);
 		
-		JButton IFinDelJuego = new JButton("Cerrar");
-		IFinDelJuego.addActionListener(new ActionListener() {
+		JButton finDelJuego = new JButton("Cerrar");
+		finDelJuego.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cerrar();
 			}
 
 		});
-		IFinDelJuego.setFont(new Font("Tahoma", Font.BOLD, 20));
-		IFinDelJuego.setBounds(847, 418, 267, 80);
-		frame.getContentPane().add(IFinDelJuego);
-		
-		
-		
+		finDelJuego.setFont(new Font("Tahoma", Font.BOLD, 20));
+		finDelJuego.setBounds(847, 418, 267, 80);
+		frame.getContentPane().add(finDelJuego);
+
 	}
 
 	private void cerrar() {

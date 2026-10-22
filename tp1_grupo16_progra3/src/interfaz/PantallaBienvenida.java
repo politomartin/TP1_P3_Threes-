@@ -14,24 +14,26 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import threes.JuegoTres;
+
+import controlador.ControladorJuego;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 public class PantallaBienvenida {
-
+	
+	private ControladorJuego controlador;
     private JFrame frame;
-    private JTextField IngresoNombreUsuario;
+    private JTextField ingresoNombreUsuario;
 
     private String nombre;
 
-    private JuegoTres programa;
+  
     private JTable tablaMejoresPuntajes;
 
-    public PantallaBienvenida(JuegoTres programa) {
+    public PantallaBienvenida(ControladorJuego controlador) {
 
-        this.programa = programa;
+        this.controlador = controlador;
 
         initialize();
 
@@ -45,44 +47,44 @@ public class PantallaBienvenida {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel Bienvenido = new JLabel("Bienvenido! Ingrese su nombre para iniciar");
-		Bienvenido.setHorizontalAlignment(SwingConstants.CENTER);
-		Bienvenido.setBounds(96, 115, 673, 45);
-		Bienvenido.setFont(new Font("Consolas", Font.PLAIN, 27));
-		frame.getContentPane().add(Bienvenido);
+		JLabel bienvenido = new JLabel("Bienvenido! Ingrese su nombre para iniciar");
+		bienvenido.setHorizontalAlignment(SwingConstants.CENTER);
+		bienvenido.setBounds(96, 115, 673, 45);
+		bienvenido.setFont(new Font("Consolas", Font.PLAIN, 27));
+		frame.getContentPane().add(bienvenido);
 
 
-		IngresoNombreUsuario = new JTextField();
-		IngresoNombreUsuario.setBounds(192, 255, 503, 84);
-		frame.getContentPane().add(IngresoNombreUsuario);
-		IngresoNombreUsuario.setColumns(10);
-		IngresoNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		IngresoNombreUsuario.setFont(new Font("Consolas", Font.BOLD, 24));
+		ingresoNombreUsuario = new JTextField();
+		ingresoNombreUsuario.setBounds(192, 255, 503, 84);
+		frame.getContentPane().add(ingresoNombreUsuario);
+		ingresoNombreUsuario.setColumns(10);
+		ingresoNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		ingresoNombreUsuario.setFont(new Font("Consolas", Font.BOLD, 24));
 		
-		JLabel ErrorNombreVacio = new JLabel();
-		ErrorNombreVacio.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 26));
-		ErrorNombreVacio.setHorizontalAlignment(SwingConstants.CENTER);
-		ErrorNombreVacio.setBounds(316, 580, 559, 45);
-		frame.getContentPane().add(ErrorNombreVacio);
+		JLabel errorNombreVacio = new JLabel();
+		errorNombreVacio.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 26));
+		errorNombreVacio.setHorizontalAlignment(SwingConstants.CENTER);
+		errorNombreVacio.setBounds(316, 580, 559, 45);
+		frame.getContentPane().add(errorNombreVacio);
 
-		JButton BotonContinuar = new JButton("Continuar");
-		BotonContinuar.setBounds(286, 418, 318, 64);
-		BotonContinuar.addActionListener(new ActionListener() {
+		JButton botonContinuar = new JButton("Continuar");
+		botonContinuar.setBounds(286, 418, 318, 64);
+		botonContinuar.addActionListener(new ActionListener() {
 
 		    public void actionPerformed(ActionEvent e) {
 
 		        String nombreIngresado =
-		                IngresoNombreUsuario.getText();
+		                ingresoNombreUsuario.getText();
 
 		        if (!nombreIngresado.trim().isEmpty()) {
 
 		            nombre = nombreIngresado;
 
-		            programa.iniciarJuego(nombre);
+		            controlador.iniciarJuego(nombre);
 
 		        } else {
 
-		            ErrorNombreVacio.setText(
+		            errorNombreVacio.setText(
 		                "El nombre no puede ser Vacio"
 		            );
 
@@ -90,8 +92,8 @@ public class PantallaBienvenida {
 		    }
 		});
 		
-		BotonContinuar.setFont(new Font("Consolas", Font.BOLD, 34));
-		frame.getContentPane().add(BotonContinuar);
+		botonContinuar.setFont(new Font("Consolas", Font.BOLD, 34));
+		frame.getContentPane().add(botonContinuar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(902, 115, 347, 506);

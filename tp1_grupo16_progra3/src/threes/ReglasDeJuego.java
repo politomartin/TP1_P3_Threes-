@@ -30,8 +30,12 @@ public class ReglasDeJuego {
 	//Apartado de agregado de fichas post movimiento
 	//
 	
+	public Ficha obtenerFicha(int fila, int columna) {
+	    return tablero.obtenerFicha(fila, columna);
+	}
+	
 	public boolean posicionLibre(int fil, int col) {
-		if (tablero.obtenerFicha(fil, col) == 0) {
+		if (tablero.obtenerFicha(fil, col).getValor() == 0) {
 			return true;
 		}
 		return false;
@@ -191,22 +195,28 @@ public class ReglasDeJuego {
 
 
 	private boolean intentarDesplazarOFusionar(int filaDestino, int columnaDestino, int filaOrigen, int columnaOrigen) {
-		int valorOrigen = tablero.obtenerFicha(filaOrigen, columnaOrigen);
-		int valorDestino = tablero.obtenerFicha(filaDestino, columnaDestino);
 		
-		if(valorOrigen == 0) {
+		Ficha origen = obtenerFicha(filaOrigen, columnaOrigen);
+		Ficha destino = obtenerFicha(filaDestino, columnaDestino);
+
+		
+		if(origen.esVacia()) {
             return false;
         }
 		
-		if(valorDestino == 0) {
-			tablero.setValor(filaDestino, columnaDestino, valorOrigen);
-			tablero.setValor(filaOrigen, columnaOrigen, 0);
-            return true;
+		if(destino.esVacia()) {
+			tablero.setFicha(filaDestino, columnaDestino, origen);
+		    tablero.setFicha(filaOrigen, columnaOrigen, new Ficha());
+		    return true;
 		}
-		if(puedenFusionarse(valorOrigen, valorDestino)) {
-			tablero.setValor(filaDestino, columnaDestino, combinarFichas(valorOrigen, valorDestino));
-            tablero.setValor(filaOrigen, columnaOrigen, 0);
-            return true;
+		if(origen.puedeCombinarCon(destino)) {
+			
+			Ficha fichaCombinada = origen.combinarCon(destino);
+
+		    tablero.setFicha(filaDestino, columnaDestino, fichaCombinada);
+		    tablero.setFicha(filaOrigen, columnaOrigen, new Ficha());
+
+		    return true;
         }
 
         return false;
@@ -255,10 +265,10 @@ public class ReglasDeJuego {
 		
 		for(int fil = 0; fil<tamanioTablero;fil++) {
 			for(int col = 0; col<tamanioTablero; col++) {
-				// compara con la ficha derecha y abajo para cubrir todas las fusiones posibles sin llegar a la ultima columna o fila
+				Ficha actual = obtenerFicha(fil, col);
 				
-				boolean fusionAbajo =  fil < tamanioTablero-1 ? puedenFusionarse(tablero.obtenerFicha(fil, col), tablero.obtenerFicha(fil + 1, col)) : false;
-				boolean fusionDerecha = col < tamanioTablero-1 ? puedenFusionarse(tablero.obtenerFicha(fil, col), tablero.obtenerFicha(fil, col + 1)): false ;
+				boolean fusionAbajo =  fil < tamanioTablero - 1 && actual.puedeCombinarCon(obtenerFicha(fil + 1, col));
+				boolean fusionDerecha = col < tamanioTablero - 1 && actual.puedeCombinarCon(obtenerFicha(fil, col + 1));
 				
 				if ( fusionAbajo || fusionDerecha)
 						return true;
@@ -266,46 +276,6 @@ public class ReglasDeJuego {
 		}
 		return false;
 	}
-
-	
-	//
-	//Apartado combinar Fichas
-	//
-	public boolean puedenFusionarse(int ficha1, int ficha2) {
-		if(ficha1 == 0 || ficha2 == 0) {
-			return false;
-		}
-		
-		if(sonFichas1y2(ficha1, ficha2)) {
-			return true;
-		}
-		
-		return sonFichasMayorQue3Iguales(ficha1, ficha2);
-	}
-	
-	//Revisar con test si funciona correctamente
-	public int combinarFichas(int ficha1, int ficha2) {
-		
-		
-		if(sonFichas1y2(ficha1, ficha2)) {
-			return ficha1 + ficha2;
-		}
-		
-		if(sonFichasMayorQue3Iguales(ficha1, ficha2)) {
-			return ficha1*2;
-		}
-		
-		return 0;
-	}
-	
-	private boolean sonFichas1y2(int ficha1, int ficha2) {
-		return ((ficha1 == 1 && ficha2 == 2) || (ficha1 == 2 && ficha2 == 1));
-	}
-	
-	private boolean sonFichasMayorQue3Iguales(int ficha1, int ficha2) {
-		return ficha1 >= 3 && ficha1 == ficha2;
-	}
-	
 	//
 	//Calcular puntaje al final del juego
 	//
@@ -314,7 +284,7 @@ public class ReglasDeJuego {
 		int total = 0;
 		for(int f = 0; f<tablero.obtenerTamanio();f++) {
 			for(int c = 0; c<tablero.obtenerTamanio(); c++) {
-				total += calcularPuntajeFicha(tablero.obtenerFicha(f, c));
+				total += calcularPuntajeFicha(tablero.obtenerFicha(f, c).getValor());
 			}
 		}
 		puntajeFinal = total;
@@ -348,10 +318,6 @@ public class ReglasDeJuego {
 	}	
 	
 	//Getters
-	
-	public Tablero obtenerMapa() {
-		return tablero;
-	}
 	
 	public int obtenerPuntaje() {
 		return puntajeFinal;

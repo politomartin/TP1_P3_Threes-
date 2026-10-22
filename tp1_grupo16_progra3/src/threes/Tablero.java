@@ -11,7 +11,12 @@ public class Tablero {
 	public Tablero(int tamanioSeleccionado) {
 		this.tamanioTablero = tamanioSeleccionado;
 		this.tablero = new Ficha[tamanioSeleccionado][tamanioSeleccionado];
-	
+		
+		for (int fila = 0; fila < tamanioSeleccionado; fila++) {
+	        for (int columna = 0; columna < tamanioSeleccionado; columna++) {
+	            tablero[fila][columna] = new Ficha();
+	        }
+	    }
 		
 	}
 	
@@ -41,18 +46,22 @@ public class Tablero {
 		return tablero[fila][col];
 	}
 	
-
-
-	public void setValor(int fila, int col, int valor) {
+	public void setFicha(int fila, int columna, Ficha ficha) {
 		if(filaInvalida(fila)) {
 			throw new RuntimeException("fila fuera de rango");
 		}
 		
-		if(columnaInvalida(col)) {
+		if(columnaInvalida(columna)) {
 			throw new RuntimeException("col fuera de rango");
 		}
 		
-		tablero[fila][col] = new Ficha(0);
+	    tablero[fila][columna] = ficha;
+	}
+
+	public void setValor(int fila, int col, int valor) {
+		
+		
+		tablero[fila][col] = new Ficha(valor);
     }
 
 	private boolean columnaInvalida(int columna) {

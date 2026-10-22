@@ -5,6 +5,10 @@ import java.awt.Color;
 public class Ficha {
     private final int valor;
 
+    public Ficha() {
+        this.valor = 0;
+    }
+    
     public Ficha(int valor) {
         this.valor = valor;
     }

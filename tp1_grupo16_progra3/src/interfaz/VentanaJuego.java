@@ -10,10 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
-import threes.JuegoTres;
-import threes.ReglasDeJuego;
-import threes.Tablero;
 
+import threes.ReglasDeJuego;
+
+import controlador.ControladorJuego;
 import javax.swing.BorderFactory;
 import javax.swing.KeyStroke;
 
@@ -22,26 +22,22 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 public class VentanaJuego {
+	private ControladorJuego controlador;
 	
-	private JuegoTres programa;
-
 	private JFrame frame;
-
 	private JPanel panelTablero;
-
 	private JLabel[][] casillas;
+	private JLabel labelpuntuacion;
 	
-	private JLabel Ipuntuacion;
-
 	private ReglasDeJuego reglas;
 	
-	private JLabel ISiguienteFicha;
+	private JLabel siguienteFicha;
 
 	private int puntuacion;
 
-	public VentanaJuego(JuegoTres juegoTres) {
+	public VentanaJuego(ControladorJuego controlador) {
 
-		this.programa = juegoTres;
+		this.controlador = controlador;
 
 		reglas = new ReglasDeJuego();
 
@@ -89,23 +85,23 @@ public class VentanaJuego {
 		}
 		frame.getContentPane().add(panelTablero, BorderLayout.CENTER);
 		
-		Ipuntuacion = new JLabel("Puntuacion :" + this.puntuacion);
-		Ipuntuacion.setBounds(1085, 20, 196, 43);
-		Ipuntuacion.setFont(new Font("Arial", Font.BOLD, 24));
-		frame.getContentPane().add(Ipuntuacion);
+		labelpuntuacion = new JLabel("Puntuacion :" + this.puntuacion);
+		labelpuntuacion.setBounds(1085, 20, 196, 43);
+		labelpuntuacion.setFont(new Font("Arial", Font.BOLD, 24));
+		frame.getContentPane().add(labelpuntuacion);
 		
-		ISiguienteFicha = new JLabel("Proxima:" + reglas.obtenerSiguienteFicha());
-		ISiguienteFicha.setFont(new Font("Arial", Font.BOLD, 24));
-		ISiguienteFicha.setHorizontalAlignment(SwingConstants.CENTER);
-		ISiguienteFicha.setBounds(519, 23, 163, 32);
-		frame.getContentPane().add(ISiguienteFicha);
+		siguienteFicha = new JLabel("Proxima:" + reglas.obtenerSiguienteFicha());
+		siguienteFicha.setFont(new Font("Arial", Font.BOLD, 24));
+		siguienteFicha.setHorizontalAlignment(SwingConstants.CENTER);
+		siguienteFicha.setBounds(519, 23, 163, 32);
+		frame.getContentPane().add(siguienteFicha);
 	}
 
 	private void actualizarTablero() {
-		Tablero tablero = reglas.obtenerMapa();
+	
 		for (int fila= 0; fila < 4; fila ++) {
 			for(int col= 0; col <4; col++) {
-				int valor = tablero.obtenerFicha(fila,col);
+				int valor = reglas.obtenerFicha(fila,col).getValor();
 				if(valor == 0) {
 					casillas[fila][col].setText("");
 					casillas[fila][col].setBackground(new Color(200, 200, 200));
@@ -121,13 +117,13 @@ public class VentanaJuego {
 		}
 		
 		int proximaFicha = reglas.obtenerSiguienteFicha();
-		ISiguienteFicha.setText("Proxima: " + proximaFicha);
-		ISiguienteFicha.setOpaque(true);
-		ISiguienteFicha.setBackground(obtenerColorCasilla(proximaFicha));
-		ISiguienteFicha.setForeground(obtenerColorTexto(proximaFicha));
-		ISiguienteFicha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(180, 180, 180), 2));
+		siguienteFicha.setText("Proxima: " + proximaFicha);
+		siguienteFicha.setOpaque(true);
+		siguienteFicha.setBackground(obtenerColorCasilla(proximaFicha));
+		siguienteFicha.setForeground(obtenerColorTexto(proximaFicha));
+		siguienteFicha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(180, 180, 180), 2));
 		this.puntuacion = reglas.obtenerPuntaje();
-		Ipuntuacion.setText("Puntuacion :" + this.puntuacion);
+		labelpuntuacion.setText("Puntuacion :" + this.puntuacion);
 	}
 
     private void configurarTeclado() {
@@ -213,7 +209,7 @@ public class VentanaJuego {
 
         if (reglas.juegoTerminado()) {
 
-        	programa.terminarJuego(reglas.obtenerPuntaje());
+        	controlador.terminarJuego(reglas.obtenerPuntaje());
 
         }
 
